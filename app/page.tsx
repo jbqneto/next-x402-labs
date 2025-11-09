@@ -27,11 +27,11 @@ export default function Home() {
           <h2 className="text-3xl font-bold mb-8 text-center">Choose Your Experiment</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <ExperimentCard
-              href="/pay-to-view"
+              href="/protected"
               icon={<Zap className="w-8 h-8 text-cyan-400" />}
-              title="Pay-to-View Page"
+              title="Premium Page"
               description="Mock payment to access exclusive hidden content"
-              price="0.05 USDC"
+              price="$0.01 USDC"
             />
             <ExperimentCard
               href="/fortune"
