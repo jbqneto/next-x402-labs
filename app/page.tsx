@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { ArrowRight, Zap, Cookie, Image } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 
 export default function Home() {
   return (
@@ -35,6 +34,7 @@ export default function Home() {
             />
             <ExperimentCard
               href="/fortune"
+              disabled={true}
               icon={<Cookie className="w-8 h-8 text-violet-400" />}
               title="Web3 Fortune Cookie"
               description="Reveal a crypto-themed fortune for just a penny"
@@ -43,6 +43,7 @@ export default function Home() {
             <ExperimentCard
               href="/mint"
               icon={<Image className="w-8 h-8 text-cyan-400" />}
+              disabled={true}
               title="Upload & Mint NFT"
               description="Upload your file and simulate NFT generation"
               price="Variable"
@@ -54,16 +55,17 @@ export default function Home() {
   );
 }
 
-function ExperimentCard({ href, icon, title, description, price }: {
+function ExperimentCard({ href, icon, title, description, price, disabled }: {
   href: string;
   icon: React.ReactNode;
   title: string;
   description: string;
   price: string;
+  disabled?: boolean;
 }) {
   return (
-    <Link href={href}>
-      <Card className="h-full transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/20 cursor-pointer border-muted">
+    <Link href={disabled ? '#' : href}>
+      <Card className={disabled ? 'opacity-50 ' : 'link '+" h-full transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/20 cursor-pointer border-muted"}>
         <CardHeader>
           <div className="mb-4">{icon}</div>
           <CardTitle className="text-xl">{title}</CardTitle>
