@@ -1,4 +1,4 @@
-import { paymentMiddleware } from "x402-next";
+import { paymentMiddleware } from "./lib/payment.middleware";
 
 type Network = 'base' | 'base-sepolia';
 
@@ -22,9 +22,6 @@ export const middleware = paymentMiddleware(
   routes,
   {
     url: facilitatorUrl  
-  },
-  {
-    appName: "Next X402 Coinbase Example",
   }
 );
 
