@@ -1,5 +1,6 @@
-import { Network, paymentMiddleware } from "x402-next";
+import { paymentMiddleware } from "x402-next";
 
+type Network = 'base' | 'base-sepolia';
 
 const facilitatorUrl = process.env.NEXT_PUBLIC_FACILITATOR_URL as `${string}://${string}`;
 const payTo = process.env.RESOURCE_WALLET_ADDRESS as `0x${string}`;
@@ -28,7 +29,5 @@ export const middleware = paymentMiddleware(
 );
 
 export const config = {
-  matcher: [
-    '/protected/:path*',
-  ]
+  matcher: ['/protected/:path*']
 };
