@@ -1,12 +1,9 @@
-import { Address } from "viem";
-import { Network, paymentMiddleware, Resource } from "x402-next";
+import { Network, paymentMiddleware } from "x402-next";
 
-const facilitatorUrl = process.env.NEXT_PUBLIC_FACILITATOR_URL as Resource;
-const payTo = process.env.RESOURCE_WALLET_ADDRESS as Address;
+
+const facilitatorUrl = process.env.NEXT_PUBLIC_FACILITATOR_URL as `${string}://${string}`;
+const payTo = process.env.RESOURCE_WALLET_ADDRESS as `0x${string}`;
 const network = process.env.NETWORK as Network;
-
-console.log("Using facilitator URL:", facilitatorUrl);
-console.log(`payTo address: ${payTo} -> network: ${network}`);
 
 const routes =  {
     "/protected": {
@@ -29,7 +26,6 @@ export const middleware = paymentMiddleware(
     appName: "Next X402 Coinbase Example",
   }
 );
-
 
 export const config = {
   matcher: [
