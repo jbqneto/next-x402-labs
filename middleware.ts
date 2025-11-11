@@ -9,7 +9,7 @@ console.log("Using facilitator URL:", facilitatorUrl);
 console.log(`payTo address: ${payTo} -> network: ${network}`);
 
 const routes =  {
-    "/protecteds": {
+    "/protected": {
       price: "$0.01",
       network,
       config: {
