@@ -9,10 +9,8 @@ import {
   processPriceToAtomicAmount,
   toJsonSafe,
 } from "x402/shared";
-import { getPaywallHtml } from "x402/paywall";
 import {
   FacilitatorConfig,
-  moneySchema,
   PaymentPayload,
   PaymentRequirements,
   Resource,
@@ -28,7 +26,6 @@ export function paymentMiddleware(
   payTo: Address,
   routes: RoutesConfig,
   facilitator?: FacilitatorConfig,
-  paywall?: PaywallConfig,
 ) {
   const { verify, settle } = useFacilitator(facilitator);
   const x402Version = 1;
@@ -54,7 +51,6 @@ export function paymentMiddleware(
       maxTimeoutSeconds,
       inputSchema,
       outputSchema,
-      customPaywallHtml,
       resource,
       errorMessages,
       discoverable,
@@ -107,37 +103,10 @@ export function paymentMiddleware(
       if (accept?.includes("text/html")) {
         const userAgent = request.headers.get("User-Agent");
         if (userAgent?.includes("Mozilla")) {
-          let displayAmount: number;
-          if (typeof price === "string" || typeof price === "number") {
-            const parsed = moneySchema.safeParse(price);
-            if (parsed.success) {
-              displayAmount = parsed.data;
-            } else {
-              displayAmount = Number.NaN;
-            }
-          } else {
-            displayAmount = Number(price.amount) / 10 ** price.asset.decimals;
-          }
-
-          const html =
-            customPaywallHtml ??
-            getPaywallHtml({
-              amount: displayAmount,
-              paymentRequirements: toJsonSafe(paymentRequirements) as Parameters<
-                typeof getPaywallHtml
-              >[0]["paymentRequirements"],
-              currentUrl: request.url,
-              testnet: network === "base-sepolia",
-              cdpClientKey: paywall?.cdpClientKey,
-              appLogo: paywall?.appLogo,
-              appName: paywall?.appName,
-              sessionTokenEndpoint: paywall?.sessionTokenEndpoint,
-            });
-          return new NextResponse(html, {
-            status: 402,
-            headers: { "Content-Type": "text/html" },
+          return NextResponse.rewrite(new URL("/paywall", request.url), {
+            status: 402, // Payment Required
           });
-        }
+        }          
       }
 
       return new NextResponse(
