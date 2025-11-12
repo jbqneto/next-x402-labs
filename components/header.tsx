@@ -1,12 +1,7 @@
-'use client';
-
 import Link from 'next/link';
-import { Droplets } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useFaucetModal } from '@/lib/faucet-modal-store';
+import { FaucetButton } from './faucet-button';
 
 export function Header() {
-  const { open } = useFaucetModal();
 
   return (
     <header className="border-b border-border/40 backdrop-blur-sm sticky top-0 z-50 bg-background/80">
@@ -21,13 +16,7 @@ export function Header() {
             </span>
           </Link>
 
-          <Button
-            onClick={open}
-            className="bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-600 hover:to-violet-600 text-white font-semibold transition-all duration-300 hover:scale-105"
-          >
-            <Droplets className="w-4 h-4 mr-2" />
-            Request Faucet
-          </Button>
+          <FaucetButton />
         </div>
       </div>
 

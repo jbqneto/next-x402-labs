@@ -78,8 +78,6 @@ export async function GET(request: NextRequest) {
       throw new Error(`Unsupported network: ${network}`);
     }
 
-  // aqui você pode montar os paymentRequirements igual ao original,
-  // mas o getPaywallHtml já aceita o formato prático deles:
   const html = await getPaywallHtml({
     currentUrl: request.url,
     amount: 0.01,
